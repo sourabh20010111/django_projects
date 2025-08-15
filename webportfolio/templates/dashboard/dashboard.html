@@ -1,0 +1,46 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Dashboard - WebPortfolio Admin{% endblock %}
+
+{% block content %}
+<div class="top-bar">
+    <span>Welcome, {{ request.user.username }} 👋</span>
+    <a href="{% url 'logout' %}" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+</div>
+
+<h1 style="margin-bottom: 15px;">Admin Dashboard</h1>
+
+<div class="cards">
+    <div class="card">
+        <i class="fa-solid fa-briefcase card-icon"></i>
+        <h2>Projects</h2>
+        <p>Manage all your portfolio projects here.</p>
+        <a href="{% url 'manage-projects' %}" class="btn">Go to Projects</a>
+    </div>
+    <div class="card">
+        <i class="fa-solid fa-file card-icon"></i>
+        <h2>Resume</h2>
+        <p>Update and manage your resume link.</p>
+        <a href="{% url 'manage-resume' %}" class="btn">Go to Resume</a>
+    </div>
+    <div class="card">
+        <i class="fa-solid fa-user card-icon"></i>
+        <h2>About</h2>
+        <p>Edit your about section for your portfolio.</p>
+        <a href="{% url 'manage-about' %}" class="btn">Go to About</a>
+    </div>
+    <div class="card">
+        <i class="fa-solid fa-id-card card-icon"></i>
+        <h2>Profile</h2>
+        <p>Update your profile picture and personal details.</p>
+        <a href="{% url 'manage-profile' %}" class="btn">Go to Profile</a>
+    </div>
+    <div class="card">
+        <i class="fa-solid fa-envelope card-icon"></i>
+        <h2>Contact</h2>
+        <p>Manage your contact information and messages.</p>
+        <a href="{% url 'manage-contact' %}" class="btn">Go to Contact</a>
+    </div>
+</div>
+{% endblock %}

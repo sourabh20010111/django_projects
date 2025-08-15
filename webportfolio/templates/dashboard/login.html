@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - WebPortfolio Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        * {
+    box-sizing: border-box;
+}
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 12px 12px 38px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            display: block;
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .input-group i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 12px 12px 38px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+        .login-btn {
+            background: #2575fc;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-btn:hover {
+            background: #1a5edb;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" class="login-box">
+        {% csrf_token %}
+        <h2>Admin Login</h2>
+        {% for message in messages %}
+            <div class="error">{{ message }}</div>
+        {% endfor %}
+        <div class="input-group">
+            <i class="fa fa-user"></i>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+</body>
+</html>

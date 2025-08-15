@@ -1,0 +1,23 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Manage About{% endblock %}
+{% block active_about %}active{% endblock %}
+
+{% block content %}
+<h1>Manage About Me</h1>
+<p>Edit your personal description and profile photo:</p>
+
+<form class="about-form" action="{% url 'manage-about' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="about-text">Description:</label>
+    <textarea id="about-text" name="about_text" rows="6" required placeholder="I am a passionate QA enthusiast">{{ about.description }}</textarea>
+
+    <label for="skills">Skills (comma separated):</label>
+    <input type="text" id="skills" name="skills" placeholder="Manual Testing, Automation Testing, Selenium WebDriver, SDLC, STLC" value="{{ about.skills }}">
+
+    <label for="about-photo">Update About-Me Photo:</label>
+    <input type="file" id="about-photo" name="about_photo" accept="image/*">
+
+    <button type="submit"><i class="fa-solid fa-upload"></i> Update About</button>
+</form>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Manage Projects{% endblock %}
+{% block active_projects %}active{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Manage Projects</h1>
+<div class="top-actions">
+    <!-- Add New Project Form Toggle Button -->
+    <button id="toggle-add-form" class="btn add-btn">
+        <i class="fa-solid fa-plus"></i> Add New Project
+    </button>
+
+    <!-- Add Project Form (Initially Hidden) -->
+    <div id="add-project-form" class="add-project-form hidden">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add">
+
+            <input type="text" name="title" placeholder="Project Title" required>
+            <textarea name="description" placeholder="Project Description" rows="4" required></textarea>
+            <input type="url" name="github_link" placeholder="GitHub Link (optional)">
+
+            <button type="submit" class="btn add-btn">
+                <i class="fa-solid fa-plus"></i> Submit Project
+            </button>
+        </form>
+    </div>
+</div>
+
+
+<!-- Existing Projects List in Table -->
+<div class="projects-table-container">
+    <table class="projects-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>GitHub Link</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td>{{ project.description }}</td>
+                <td>
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="github-link">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td class="actions-cell">
+                    <!-- Edit Form -->
+                    <form method="POST" class="inline-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="edit">
+                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                        <input type="text" name="title" value="{{ project.title }}" placeholder="Title" required>
+                        <input type="text" name="description" value="{{ project.description }}" placeholder="Description" required>
+                        <input type="url" name="github_link" value="{{ project.github_link }}" placeholder="GitHub Link">
+                        <button type="submit" class="btn edit-btn">
+                            <i class="fa-solid fa-pen"></i> Update
+                        </button>
+                    </form>
+
+                    <!-- Delete Form -->
+                    <form method="POST" class="inline-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                        <button type="submit" class="btn delete-btn">
+                            <i class="fa-solid fa-trash"></i> Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="no-projects">No projects found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

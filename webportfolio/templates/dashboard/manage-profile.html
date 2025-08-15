@@ -1,0 +1,34 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Manage Profile{% endblock %}
+{% block active_profile %}active{% endblock %}
+
+{% block content %}
+<h1>Manage Profile</h1>
+<p>Update your profile picture:</p>
+
+<!-- Success message -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert" style="padding:10px; background:#4CAF50; color:white; margin-bottom:15px; border-radius:5px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form class="profile-form" action="{% url 'manage-profile' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="profile-photo">Upload New Profile Photo:</label>
+    <input type="file" id="profile-photo" name="profile_photo" accept="image/*" required style="margin-bottom:15px;">
+
+    <button type="submit" style="padding:10px 15px; background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer;">
+        <i class="fa-solid fa-upload"></i> Update Profile Picture
+    </button>
+</form>
+
+{% if profile_photo %}
+    <div class="current-profile" style="margin-top:20px;">
+        <h2>Current Profile Photo</h2>
+        <img src="{{ profile_photo.url }}" alt="Profile Photo" class="profile-img" style="width:150px; height:150px; border-radius:50%; object-fit:cover; border:2px solid #ccc;">
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Manage Resume{% endblock %}
+{% block active_resume %}active{% endblock %}
+
+
+{% block content %}
+<div class="resume-page">
+
+    <h1 class="page-title">Manage Resume</h1>
+    <p class="page-subtitle">Upload, view, or delete your resume here.</p>
+
+    <!-- Success/Error Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Upload Resume Card -->
+    <div class="card upload-card">
+        <h2>Upload New Resume</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="resume_file" accept=".pdf,.doc,.docx" required>
+            <button type="submit" class="btn upload-btn">
+                <i class="fa-solid fa-upload"></i> Upload
+            </button>
+        </form>
+    </div>
+
+    <!-- Existing Resume Card -->
+    {% if resume %}
+    <div class="card current-resume">
+        <h2>Current Resume</h2>
+        <p>Uploaded at: {{ resume.uploaded_at|date:"d M Y H:i" }}</p>
+        <div class="btn-container">
+            <a href="{{ resume.file.url }}" target="_blank" class="btn view-btn">
+                <i class="fa-solid fa-file-pdf"></i> View
+            </a>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" name="action" value="delete" class="btn delete-btn">
+                    <i class="fa-solid fa-trash"></i> Delete
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
